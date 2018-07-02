@@ -1,4 +1,4 @@
-require "./bookmark_app.rb"
+require './bookmark_app.rb'
 
 # As a user
 # So that I can easily find a website I have bookmarked
@@ -6,7 +6,7 @@ require "./bookmark_app.rb"
 
 feature 'Bookmarks' do
   scenario 'return list of my bookmarks' do
-    visit ('/')
+    visit('/')
     expect(page).to have_content 'Makers Academy'
   end
 
