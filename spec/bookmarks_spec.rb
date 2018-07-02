@@ -1,10 +1,12 @@
 require 'bookmarks'
 
 describe Bookmarks do
-  subject(:bookmarks) { described_class.new }
-  describe '#all' do
+  describe '.all' do
     it 'show all bookmarks' do
-      expect(bookmarks.all).to eq bookmarks.list
+      bookmarks = Bookmarks.all
+      expect(bookmarks).to include("http://makersacademy.com")
+      expect(bookmarks).to include("http://destroyallsoftware.com")
+      expect(bookmarks).to include("http://google.com")
     end
   end
 end

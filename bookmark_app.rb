@@ -4,13 +4,14 @@ require './lib/bookmarks'
 class BookmarkWeb < Sinatra::Base
 
   get '/' do
-    @bookmarks = Bookmarks.new
+    'Hello World'
+  end
+
+  get '/bookmarks' do
+    @bookmarks = Bookmarks.all
     erb :index
   end
 
-  get '/server' do
-    erb :server
-  end
 
   run! if app_file == $0
 end

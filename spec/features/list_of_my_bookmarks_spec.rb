@@ -6,8 +6,10 @@ require './bookmark_app.rb'
 
 feature 'Bookmarks' do
   scenario 'return list of my bookmarks' do
-    visit('/')
-    expect(page).to have_content 'Makers Academy'
+    visit('/bookmarks')
+    expect(page).to have_content 'http://makersacademy.com'
+    expect(page).to have_content 'http://destroyallsoftware.com'
+    expect(page).to have_content 'http://google.com'
   end
 
 end

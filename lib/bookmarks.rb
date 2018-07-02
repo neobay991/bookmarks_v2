@@ -1,10 +1,11 @@
 class Bookmarks
-  attr_reader :list
-  def initialize
-    @list = ['Makers Academy', 'Google']
+
+  def self.all
+    [
+      "http://makersacademy.com",
+      "http://destroyallsoftware.com",
+      "http://google.com"
+    ]
   end
 
-  def all
-    @list.join(', ')
-  end
 end
