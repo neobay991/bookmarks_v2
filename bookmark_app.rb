@@ -3,6 +3,10 @@ require 'sinatra/base'
 
 class BookmarkWeb < Sinatra::Base
 
+  get '/' do
+    erb :index
+  end
+
   get '/server' do
     erb :server
   end
