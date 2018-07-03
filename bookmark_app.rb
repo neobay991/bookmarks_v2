@@ -4,12 +4,21 @@ require './lib/bookmarks'
 class BookmarkWeb < Sinatra::Base
 
   get '/' do
-    'Hello World'
+    'hello world'
+    p ENV['RACK_ENV']
   end
 
   get '/bookmarks' do
+    p ENV['RACK_ENV']
     @bookmarks = Bookmarks.all
+
     erb :index
+  end
+
+  # useful to check which env is running
+  get '/server' do
+    p ENV['RACK_ENV']
+    
   end
 
 
