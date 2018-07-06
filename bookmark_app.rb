@@ -8,7 +8,7 @@ class BookmarkWeb < Sinatra::Base
   end
 
   get '/bookmarks' do
-    # p ENV['ENVIRONMENT']
+     p ENV['ENVIRONMENT']
     @bookmarks = Bookmarks.all
 
     erb :index
