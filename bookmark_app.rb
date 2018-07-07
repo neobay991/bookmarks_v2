@@ -1,5 +1,5 @@
 require 'sinatra/base'
-require './lib/bookmarks'
+require './lib/Bookmark'
 require 'uri' # this module is required for flash[:notice]
 require 'sinatra/flash' # this module is required for flash[:notice]
 
@@ -13,7 +13,7 @@ class BookmarkWeb < Sinatra::Base
   end
 
   get '/bookmarks' do
-    @bookmarks = Bookmarks.all
+    @bookmarks = Bookmark.all
     erb :index
   end
 
@@ -22,28 +22,28 @@ class BookmarkWeb < Sinatra::Base
   end
 
   post '/bookmarks' do
-    flash[:notice] = "You must submit a valid URL" unless Bookmarks.create(url: params['url'], title: params['title'])
-    p "Form data submitted to the /bookmarks route!"
+    flash[:notice] = "You must submit a valid URL" unless Bookmark.create(url: params['url'], title: params['title'])
+    p "Form data submitted to the /Bookmark route!"
 
     redirect '/bookmarks'
   end
 
   post '/bookmarks/:id/delete' do
     # p params # e.g. {"id"=>"1"}
-    Bookmarks.delete(id: params['id'])
+    Bookmark.delete(id: params['id'])
     redirect '/bookmarks'
   end
 
   post '/bookmarks/:id/edit' do
     # p params
     @bookmark_id = params['id'] # required for form action path
-    @bookmark = Bookmarks.find(params['id'])
+    @bookmark = Bookmark.find(params['id'])
     erb :"bookmarks/edit"
-    # redirect('/bookmarks')
+    # redirect('/Bookmark')
   end
 
   post '/bookmarks/:id/edit/confirm' do
-    Bookmarks.update(params['id'], params)
+    Bookmark.update(params['id'], params)
 
     p params
     p "Form data submitted to the /bookmarks route!"

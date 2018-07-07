@@ -10,7 +10,7 @@ feature 'Adding a new bookmark' do
     fill_in('url', with: 'http://AddBookmark.com')
     fill_in('title', with: 'AddBookmark')
     click_button('Add bookmark')
-    
+
     expect(current_path).to eq '/bookmarks'
     expect(page).to have_content 'AddBookmark'
   end
