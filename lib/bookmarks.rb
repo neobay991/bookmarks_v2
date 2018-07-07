@@ -33,7 +33,8 @@ class Bookmarks
       connection = PG.connect(dbname: 'bookmark_manager')
     end
 
-    # We are RETURNING the ID and URL from the bookmark we just inserted into the database and then wrapping it to a Bookmark instance
+    # We are RETURNING the ID and URL from the bookmark we just inserted into the database and then wrapping it to a Bookmark instance e.g
+    # => #<Bookmarks:0x00007fe866135500 @id="95", @url="http://www.bbc.co.uk", @title="bbc">
     return false unless is_url?(params[:url])
       result = connection.exec("INSERT INTO bookmarks (url, title) VALUES('#{params[:url]}', '#{params[:title]}') RETURNING id, url, title")
       Bookmarks.new(result.first['id'], result.first['url'], result.first['title'])
@@ -57,6 +58,25 @@ class Bookmarks
     end
 
     connection.exec("UPDATE bookmarks SET url = '#{options[:url]}', title = '#{options[:title]}' WHERE id = '#{id}'")
+  end
+
+  def self.find(id)
+    if ENV['ENVIRONMENT'] == 'test'
+      connection = PG.connect(dbname: 'bookmark_manager_test2')
+    else
+      connection = PG.connect(dbname: 'bookmark_manager')
+    end
+
+    result = connection.exec("SELECT * FROM bookmarks WHERE id = '#{id}'")
+
+    # the result object look's like this:
+    # [#<Bookmarks:0x00007fe8660ad5b0 @id="94", @url="http://www.ebay.com", @title="ebay">]
+    # result.map { |bookmark| Bookmarks.new(bookmark.first['id'], bookmark.first['url'], bookmark.first['title'])}
+
+    result.map { |bookmark| Bookmarks.new(bookmark['id'], bookmark['url'], bookmark['title']) }.first
+
+    # result = connection.exec("INSERT INTO bookmarks (url, title) VALUES('#{params[:url]}', '#{params[:title]}') RETURNING id, url, title")
+    # Bookmarks.new(result.first['id'], result.first['url'], result.first['title'])
   end
 
   def ==(other)

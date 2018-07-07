@@ -37,7 +37,7 @@ class BookmarkWeb < Sinatra::Base
   post '/bookmarks/:id/edit' do
     # p params
     @bookmark_id = params['id'] # required for form action path
-
+    @bookmark = Bookmarks.find(params['id'])
     erb :"bookmarks/edit"
     # redirect('/bookmarks')
   end

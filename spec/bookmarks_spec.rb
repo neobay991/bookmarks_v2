@@ -33,6 +33,17 @@ describe Bookmarks do
     end
   end
 
+  # TODO review this test, need to stub the id
+  # describe '.find' do
+  #   it 'finds a bookmark' do
+  #     Bookmarks.create(url: 'http://3makersacademy.com', title: '3makersacademy')
+  #     @bookmark = Bookmarks.find(1)
+  #     p @bookmark.inspect
+  #     expect(@bookmark.url).to eq "http://3makersacademy.com"
+  #     expect(@bookmark.title).to eq "3makersacademy"
+  #   end
+  # end
+
   describe '#==' do
     it 'two Bookmarks are equal if their IDs match' do
       bookmark_1 = Bookmarks.new(1, 'http://BookmarkID.com', 'title')
