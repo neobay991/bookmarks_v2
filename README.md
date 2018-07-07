@@ -26,7 +26,7 @@ I would like to be able to add a new bookmark
 
 ╔════════════╗      .add(bookmark)         ╔════════════╗
 ║            ║---------------------------->║            ║
-║ Controller ║     [array of Bookmark]    ║  Bookmark  ║
+║ Controller ║     [array of Bookmark]     ║  Bookmark  ║
 ║            ║<----------------------------║            ║
 ╚════════════╝                             ╚════════════╝
 
@@ -43,6 +43,39 @@ I would like to be able to delete Bookmark
 -------
 
 As a user
-So I can keep my Bookmark list up-to-date
-I would like to be able to update Bookmark
+So I can change a bookmark in Bookmark Manager
+I want to update a bookmark
+
+-------
+
+As a user
+So I can keep remeber which bookmarks I like
+I would like to be able to add comments to a Bookmark
+
+In a one-to-many relationship, there are two models:
+
+one 'parent' model, Bookmark, has many Comments.
+the 'child' model, Comment, belongs to a single Bookmark.
+  ONE       ––≡≡   MANY
+ Bookmark   ––≡≡  Comments
+
+ The only way to store this in a table relationship is to add an extra column to the 'child' model.
+
+For instance, in the table below, the first two comments refer to a Bookmark with an ID of 1. The last comment refers to a Bookmark with an ID of 2:
+
+Comments table:
+
+| id | text                       | bookmark_id |
+|----|----------------------------|-------------|
+| 1  | Great Bookmark!            | 1           |
+| 2  | I don't like this Bookmark | 1           |
+| 3  | What a cool resource       | 2           |
+
+Comments with ID 1 and 2 are comments on the same Bookmark. If they were displayed, they'd look like this:
+
+Bookmark 1
+Great Bookmark!
+I don't like this Bookmark.
+Bookmark 2
+What a cool resource
 ````
