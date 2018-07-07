@@ -1,17 +1,17 @@
-require './bookmark_app.rb'
+
 
 # As a user
 # So I can store bookmark data for later retrieval
 # I want to add a bookmark to Bookmark Manager
 
 feature 'Adding a new bookmark' do
-  scenario 'add a bookmark' do
+  scenario 'a user can add a bookmark' do
     visit('/bookmarks/new')
     fill_in('url', with: 'http://AddBookmark.com')
     fill_in('title', with: 'AddBookmark')
     click_button('Add bookmark')
-
-    expect(page).to have_content 'http://AddBookmark.com'
+    
+    expect(current_path).to eq '/bookmarks'
     expect(page).to have_content 'AddBookmark'
   end
 

@@ -18,9 +18,9 @@ class Bookmarks
 
     result = connection.exec("SELECT * FROM bookmarks")
 
-    # The result object contains the bookmarks, each of which is a hash of the bookmark ID and bookmark URL. We map each hash to the url key of the hash. This gives us an array of the bookmark URLs.
+    # The result object contains the bookmarks, each of which is a hash of the bookmark ID,  bookmark URL and bookmark title. We map each hash to the url key of the hash. This gives us an array of the bookmark URLs and titles.
 
-    # we return the correct data, wrapped in an Bookmarks instance. e.g
+    # we return the correct data, wrapped in a Bookmarks instance. e.g
     #  => [#<Bookmarks:0x00007f8d6f023d30 @id="78", @url="http://www.google.com", @title="Google">, #<Bookmarks:0x00007f8d6f023678 @id="79", @url="http://www.bbc.co.uk", @title="BBC">, #<Bookmarks:0x00007f8d6e0606f0 @id="80", @url="http://www.yahoo.com", @title="Yahoo">]
 
     result.map { |bookmark| Bookmarks.new(bookmark['id'], bookmark['url'], bookmark['title']) }
@@ -33,6 +33,7 @@ class Bookmarks
       connection = PG.connect(dbname: 'bookmark_manager')
     end
 
+    # We are RETURNING the ID and URL from the bookmark we just inserted into the database and then wrapping it to a Bookmark instance
     return false unless is_url?(params[:url])
       result = connection.exec("INSERT INTO bookmarks (url, title) VALUES('#{params[:url]}', '#{params[:title]}') RETURNING id, url, title")
       Bookmarks.new(result.first['id'], result.first['url'], result.first['title'])
