@@ -1,10 +1,15 @@
 <h3><%= flash[:notice] %></h3>
 <ul>
   <% @bookmarks.each do |bookmark| %>
-  <li>
-    <a href="<%= bookmark.url %>">
-      <%= bookmark.title %>
-    </a>
-  </li>
+    <li>
+      <a href="<%= bookmark.url %>">
+        <%= bookmark.title %>
+      </a>
+      <!-- see this post why we cannot use delete  https://softwareengineering.stackexchange.com/questions/114156/why-are-there-are-no-put-and-delete-methods-on-html-forms -->
+      <form action="/bookmarks/<%= bookmark.id %>/delete" method="post">
+        <input type="hidden" name="id" value="<%= bookmark.id %>">
+        <input type="submit" value="Delete"/>
+      </form>
+    </li>
   <% end %>
 </ul>

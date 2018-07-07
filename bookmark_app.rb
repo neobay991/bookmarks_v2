@@ -9,7 +9,7 @@ class BookmarkWeb < Sinatra::Base
   register Sinatra::Flash
 
   get '/' do
-    'hello world'
+    redirect '/bookmarks'
   end
 
   get '/bookmarks' do
@@ -25,6 +25,13 @@ class BookmarkWeb < Sinatra::Base
     flash[:notice] = "You must submit a valid URL" unless Bookmarks.create(url: params['url'], title: params['title'])
     p "Form data submitted to the /bookmarks route!"
 
+    redirect '/bookmarks'
+  end
+
+
+  post '/bookmarks/:id/delete' do
+    # p params # e.g. {"id"=>"1"}
+    Bookmarks.delete(id: params['id'])
     redirect '/bookmarks'
   end
 
