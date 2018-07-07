@@ -10,10 +10,9 @@ feature 'Deleting a bookmark' do
     visit('/bookmarks')
     Bookmarks.create(url: 'http://bookmark2.com', title: 'Bookmark 2')
 
-    click_button('Delete')
+    click_button('Delete', match: :first)
 
-
-    expect(page).not_to have_content 'Bookmark 2'
-    expect(page).to have_content 'Bookmark 1'
+    expect(page).not_to have_content 'Bookmark 1'
+    expect(page).to have_content 'Bookmark 2'
   end
 end
