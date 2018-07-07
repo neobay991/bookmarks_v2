@@ -1,7 +1,12 @@
 require 'sinatra/base'
 require './lib/bookmarks'
+require 'uri' # this module is required for flash[:notice]
+require 'sinatra/flash' # this module is required for flash[:notice]
 
 class BookmarkWeb < Sinatra::Base
+
+  enable :sessions
+  register Sinatra::Flash
 
   get '/' do
     'hello world'
@@ -17,14 +22,11 @@ class BookmarkWeb < Sinatra::Base
   end
 
   post '/bookmarks' do
-    Bookmarks.create(url: params['url'])
-    # p "Form data submitted to the /bookmarks route!"
+    flash[:notice] = "You must submit a valid URL" unless Bookmarks.create(url: params['url'])
+    p "Form data submitted to the /bookmarks route!"
+
     redirect '/bookmarks'
   end
-
-
-
-
 
   run! if app_file == $0
 end

@@ -3,12 +3,11 @@ require 'bookmarks'
 describe Bookmarks do
   describe '.all' do
     it 'returns all bookmarks in an array' do
-      connection = PG.connect(dbname: 'bookmark_manager_test2')
 
       # Add the test data
-      connection.exec("INSERT INTO bookmarks (url) VALUES ('http://makersacademy.com');")
-      connection.exec("INSERT INTO bookmarks (url) VALUES('http://destroyallsoftware.com');")
-      connection.exec("INSERT INTO bookmarks (url) VALUES('http://google.com');")
+      Bookmarks.create(url: 'http://makersacademy.com')
+      Bookmarks.create(url: 'http://destroyallsoftware.com')
+      Bookmarks.create(url: 'http://google.com')
 
       expected_bookmarks = [
         'http://makersacademy.com',
@@ -22,10 +21,15 @@ describe Bookmarks do
 
   describe '.create' do
     it 'creates a new bookmark' do
-      connection = PG.connect(dbname: 'bookmark_manager_test2')
-      Bookmarks.create(url: 'http://www.tessstbookmark.com')
+      Bookmarks.create(url: 'http://www.AddBookmark.com')
 
-      expect(Bookmarks.all).to include 'http://www.tessstbookmark.com'
+      expect(Bookmarks.all).to include 'http://www.AddBookmark.com'
+    end
+
+    it 'does not create a bookmark if the URL is not valid' do
+      Bookmarks.create(url: 'Not a valid bookmark')
+
+      expect(Bookmarks.all).to_not include 'Not a valid bookmark'
     end
   end
 end

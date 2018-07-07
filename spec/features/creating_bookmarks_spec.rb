@@ -7,9 +7,18 @@ require './bookmark_app.rb'
 feature 'Adding a new bookmark' do
   scenario 'add a bookmark' do
     visit('/bookmarks/new')
-    fill_in('url', with: 'http://ADDBOOKMARK.com')
-    click_button('Submit')
+    fill_in('url', with: 'http://AddBookmark.com')
+    click_button('Add bookmark')
 
-    expect(page).to have_content 'http://ADDBOOKMARK.com'
+    expect(page).to have_content 'http://AddBookmark.com'
+  end
+
+  scenario 'the bookmark must be a valid url' do
+    visit('/bookmarks/new')
+    fill_in('url', with: 'Not a valid bookmark')
+    click_button('Add bookmark')
+
+    expect(page).to_not have_content 'Not a valid bookmark'
+    expect(page).to have_content 'You must submit a valid URL'
   end
 end
