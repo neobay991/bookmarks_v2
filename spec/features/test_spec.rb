@@ -5,8 +5,5 @@ require './bookmark_app.rb'
 # I would like to be able to see a list of my bookmarks
 
 feature 'Bookmarks' do
-  scenario 'test - ignore' do
-
-  end
-
+  
 end

@@ -8,9 +8,11 @@ feature 'Adding a new bookmark' do
   scenario 'add a bookmark' do
     visit('/bookmarks/new')
     fill_in('url', with: 'http://AddBookmark.com')
+    fill_in('title', with: 'AddBookmark')
     click_button('Add bookmark')
 
     expect(page).to have_content 'http://AddBookmark.com'
+    expect(page).to have_content 'AddBookmark'
   end
 
   scenario 'the bookmark must be a valid url' do

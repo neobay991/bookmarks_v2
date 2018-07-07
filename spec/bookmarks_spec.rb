@@ -5,14 +5,14 @@ describe Bookmarks do
     it 'returns all bookmarks in an array' do
 
       # Add the test data
-      Bookmarks.create(url: 'http://makersacademy.com')
-      Bookmarks.create(url: 'http://destroyallsoftware.com')
-      Bookmarks.create(url: 'http://google.com')
+      bookmark_1 = Bookmarks.create(url: 'http://makersacademy.com', title: 'makersacademy')
+      bookmark_2 = Bookmarks.create(url: 'http://destroyallsoftware.com', title: 'destroyallsoftware')
+      bookmark_3 = Bookmarks.create(url: 'http://google.com', title: 'google')
 
       expected_bookmarks = [
-        'http://makersacademy.com',
-        'http://destroyallsoftware.com',
-        'http://google.com'
+        bookmark_1,
+        bookmark_2,
+        bookmark_3
       ]
 
       expect(Bookmarks.all).to eq expected_bookmarks
@@ -21,15 +21,24 @@ describe Bookmarks do
 
   describe '.create' do
     it 'creates a new bookmark' do
-      Bookmarks.create(url: 'http://www.AddBookmark.com')
+      bookmark_1 = Bookmarks.create(url: 'http://www.AddBookmark.com', title: 'AddBookmark')
 
-      expect(Bookmarks.all).to include 'http://www.AddBookmark.com'
+      expect(Bookmarks.all).to include bookmark_1
     end
 
     it 'does not create a bookmark if the URL is not valid' do
       Bookmarks.create(url: 'Not a valid bookmark')
 
       expect(Bookmarks.all).to_not include 'Not a valid bookmark'
+    end
+  end
+
+  describe '#==' do
+    it 'two Bookmarks are equal if their IDs match' do
+      bookmark_1 = Bookmarks.new(1, 'http://BookmarkID.com', 'title')
+      bookmark_2 = Bookmarks.new(1, 'http://BookmarkID.com', 'title')
+
+      expect(bookmark_1).to eq bookmark_2
     end
   end
 end
