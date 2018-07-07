@@ -8,11 +8,23 @@ class BookmarkWeb < Sinatra::Base
   end
 
   get '/bookmarks' do
-     p ENV['ENVIRONMENT']
     @bookmarks = Bookmarks.all
-
     erb :index
   end
+
+  get '/bookmarks/new' do
+    erb :"bookmarks/new"
+  end
+
+  post '/bookmarks' do
+    Bookmarks.create(url: params['url'])
+    # p "Form data submitted to the /bookmarks route!"
+    redirect '/bookmarks'
+  end
+
+
+
+
 
   run! if app_file == $0
 end

@@ -14,4 +14,14 @@ class Bookmarks
       # => ["http://www.google.com", "http://www.bbc.co.uk", "http://www.yahoo.com"]
       result.map { |bookmark| bookmark['url']  }
   end
+
+  def self.create(params)
+    if ENV['ENVIRONMENT'] == 'test'
+      connection = PG.connect(dbname: 'bookmark_manager_test2')
+    else
+      connection = PG.connect(dbname: 'bookmark_manager')
+    end
+
+      result = connection.exec("INSERT INTO bookmarks (url) VALUES('#{params[:url]}')")
+  end
 end
