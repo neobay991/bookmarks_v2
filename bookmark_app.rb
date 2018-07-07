@@ -43,12 +43,10 @@ class BookmarkWeb < Sinatra::Base
   end
 
   post '/bookmarks/:id/edit/confirm' do
-
-    # Bookmarks.update(id: params['id'])
     Bookmarks.update(params['id'], params)
+
     p params
-    # connection = PG.connect(dbname: 'bookmark_manager_test2')
-    # connection.exec("UPDATE bookmarks SET url = '#{params[:url]}', title = '#{params[:title]}' WHERE id = '#{params[:id]}'")
+    p "Form data submitted to the /bookmarks route!"
 
     redirect '/bookmarks'
   end
