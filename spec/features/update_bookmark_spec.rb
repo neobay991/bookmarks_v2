@@ -6,7 +6,10 @@ require './bookmark_app.rb'
 
 feature 'Updating a bookmark' do
   scenario 'A user can update a bookmark' do
-    Bookmarks.create(url: 'http://AddBookmark.com', title: 'AddBookmark')
+    visit('/bookmarks/new')
+    fill_in('url', with: "http://AddBookmark.com")
+    fill_in('title', with: "AddBookmark")
+    click_button('Add bookmark')
     visit('/bookmarks')
     click_button('Edit')
     fill_in('url', with: "http://Editbookmark.com")
