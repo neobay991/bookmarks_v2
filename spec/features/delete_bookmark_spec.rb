@@ -6,7 +6,7 @@ require './bookmark_app.rb'
 
 feature 'Deleting a bookmark' do
   scenario 'A user can delete a bookmark' do
-    Bookmarks.create(url: 'http://bookmark1.com', titlde: 'Bookmark 1')
+    Bookmarks.create(url: 'http://bookmark1.com', title: 'Bookmark 1')
     visit('/bookmarks')
     Bookmarks.create(url: 'http://bookmark2.com', title: 'Bookmark 2')
 

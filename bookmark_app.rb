@@ -28,12 +28,31 @@ class BookmarkWeb < Sinatra::Base
     redirect '/bookmarks'
   end
 
-
   post '/bookmarks/:id/delete' do
     # p params # e.g. {"id"=>"1"}
     Bookmarks.delete(id: params['id'])
     redirect '/bookmarks'
   end
+
+  post '/bookmarks/:id/edit' do
+    # p params
+    @bookmark_id = params['id'] # required for form action path
+
+    erb :"bookmarks/edit"
+    # redirect('/bookmarks')
+  end
+
+  post '/bookmarks/:id/edit/confirm' do
+
+    # Bookmarks.update(id: params['id'])
+    Bookmarks.update(params['id'], params)
+    p params
+    # connection = PG.connect(dbname: 'bookmark_manager_test2')
+    # connection.exec("UPDATE bookmarks SET url = '#{params[:url]}', title = '#{params[:title]}' WHERE id = '#{params[:id]}'")
+
+    redirect '/bookmarks'
+  end
+
 
   run! if app_file == $0
 end

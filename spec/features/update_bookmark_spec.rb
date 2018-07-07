@@ -2,18 +2,19 @@ require './bookmark_app.rb'
 
 # As a user
 # So I can change a bookmark in Bookmark Manager
-# # I want to update a bookmark
-#
-# feature 'Updating a bookmark' do
-#   scenario 'A user can update a bookmark' do
-#     Bookmarks.create(url: 'http://bookmark1.com', titlde: 'Bookmark 1')
-#     visit('/bookmarks')
-#     Bookmarks.create(url: 'http://bookmark2.com', title: 'Bookmark 2')
-#
-#     click_button('Delete')
-#
-#
-#     expect(page).not_to have_content 'Bookmark 2'
-#     expect(page).to have_content 'Bookmark 1'
-#   end
-# end
+# I want to update a bookmark
+
+feature 'Updating a bookmark' do
+  scenario 'A user can update a bookmark' do
+    Bookmarks.create(url: 'http://AddBookmark.com', title: 'AddBookmark')
+    visit('/bookmarks')
+    click_button('Edit')
+    fill_in('url', with: "http://Editbookmark.com")
+    fill_in('title', with: "EditBookmark UPDATED")
+    click_button('Update')
+
+    expect(current_path).to eq '/bookmarks'
+    expect(page).not_to have_content 'AddBookmark'
+    expect(page).to have_content 'EditBookmark UPDATED'
+  end
+end

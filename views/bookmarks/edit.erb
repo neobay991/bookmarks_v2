@@ -1,0 +1,6 @@
+<form action="/bookmarks/<%= @bookmark_id %>/edit/confirm" method="post">
+  <input type="hidden" name="id" value="<%= @bookmark_id %>">
+  Enter a URL: <input type="text" name="url" />
+  Enter a title: <input type="text" name="title" />
+  <input type="submit" value="Update" />
+</form>
