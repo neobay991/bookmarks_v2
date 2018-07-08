@@ -71,12 +71,20 @@ class Bookmark
 
     # the result object look's like this:
     # [#<Bookmark:0x00007fe8660ad5b0 @id="94", @url="http://www.ebay.com", @title="ebay">]
-    # result.map { |bookmark| Bookmark.new(bookmark.first['id'], bookmark.first['url'], bookmark.first['title'])}
 
     result.map { |bookmark| Bookmark.new(bookmark['id'], bookmark['url'], bookmark['title']) }.first
+  end
 
-    # result = connection.exec("INSERT INTO Bookmark (url, title) VALUES('#{params[:url]}', '#{params[:title]}') RETURNING id, url, title")
-    # Bookmark.new(result.first['id'], result.first['url'], result.first['title'])
+
+  def comments
+    if ENV['ENVIRONMENT'] == 'test'
+      connection = PG.connect(dbname: 'bookmark_manager_test2')
+    else
+      connection = PG.connect(dbname: 'bookmark_manager')
+    end
+
+    result = connection.exec("SELECT * FROM comments WHERE bookmark_id = #{@id}")
+    result.map { |comment| Comment.new(comment['id'], comment['text']) }
   end
 
   def ==(other)

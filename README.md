@@ -49,7 +49,7 @@ I want to update a bookmark
 -------
 
 As a user
-So I can keep remeber which bookmarks I like
+So I can keep remember which bookmarks I like
 I would like to be able to add comments to a Bookmark
 
 In a one-to-many relationship, there are two models:

@@ -1,4 +1,4 @@
-
+require './bookmark_app.rb'
 
 # As a user
 # So I can store bookmark data for later retrieval

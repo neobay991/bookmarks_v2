@@ -1,0 +1,9 @@
+<h1>Bookmark Manager</h1>
+<h2>Add a comment</h2>
+<form action="/bookmarks/<%= @bookmark.id %>/comments/confirm" method="post">
+  <input type="hidden" name="id" value="<%= @bookmark_id %>">
+  <textarea name="text"></textarea>
+  <br />
+  <br />
+  <input type="submit" value="Submit" />
+</form>

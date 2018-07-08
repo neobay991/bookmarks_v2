@@ -1,5 +1,6 @@
 require 'sinatra/base'
-require './lib/Bookmark'
+require './lib/bookmark'
+require './lib/comment'
 require 'uri' # this module is required for flash[:notice]
 require 'sinatra/flash' # this module is required for flash[:notice]
 
@@ -47,6 +48,22 @@ class BookmarkWeb < Sinatra::Base
 
     p params
     p "Form data submitted to the /bookmarks route!"
+
+    redirect '/bookmarks'
+  end
+
+  get '/bookmarks/:id/comments/new' do
+    p params
+    @bookmark = Bookmark.find(params['id'])
+    erb :"comments/new"
+  end
+
+  post '/bookmarks/:id/comments/confirm' do
+    p params
+
+    Comment.create(bookmark_id: params['id'], text: params['text'])
+
+    p "Form data submitted to the /comments route!"
 
     redirect '/bookmarks'
   end

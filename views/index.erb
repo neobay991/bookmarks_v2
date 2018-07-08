@@ -4,18 +4,34 @@
 <ul>
   <% @bookmarks.each do |bookmark| %>
     <li>
-      <a href="<%= bookmark.url %>">
+      <a href="<%= bookmark.url %>" target="_blank">
         <%= bookmark.title %>
       </a>
+      <br/> <br />
       <!-- see this post why we cannot use delete  https://softwareengineering.stackexchange.com/questions/114156/why-are-there-are-no-put-and-delete-methods-on-html-forms -->
-        <form action="/bookmarks/<%= bookmark.id %>/edit" method="post">
-          <input type="hidden" name="id" value="<%= bookmark.id %>">
-          <input type="submit" value="Edit"/>
-        </form>
-        <form action="/bookmarks/<%= bookmark.id %>/delete" method="post">
-          <input type="hidden" name="id" value="<%= bookmark.id %>">
-          <input type="submit" value="Delete"/>
-        </form>
+      <form action="/bookmarks/<%= bookmark.id %>/edit" method="post">
+        <input type="hidden" name="id" value="<%= bookmark.id %>">
+        <input type="submit" value="Edit"/>
+      </form>
+
+      <form action="/bookmarks/<%= bookmark.id %>/delete" method="post">
+        <input type="hidden" name="id" value="<%= bookmark.id %>">
+        <input type="submit" value="Delete"/>
+      </form>
+
+      <form action="/bookmarks/<%= bookmark.id %>/comments/new">
+        <input type="hidden" name="id" value="<%= bookmark.id %>">
+        <input type="submit" value="Add comment"/>
+      </form>
     </li>
+    <p>Commments:</p>
+    <ul>
+      <% bookmark.comments.each do |comment| %>
+        <%= comment.text %><br />
+      <% end %>
+    </ul>
+    <div>
+      ========
+    </div>
   <% end %>
 </ul>

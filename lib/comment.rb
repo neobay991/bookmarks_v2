@@ -12,7 +12,14 @@ class Comment
   # => #<Bookmark:0x00007fe866135500 @id="95", @url="http://www.bbc.co.uk", @title="bbc">
 
   def self.create(params)
-    result = DatabaseConnection.query("INSERT INTO comments (bookmark_id, text) VALUES('#{params[:link_id]}', '#{params[:text]}') RETURNING id, text")
+
+    if ENV['ENVIRONMENT'] == 'test'
+      connection = PG.connect(dbname: 'bookmark_manager_test2')
+    else
+      connection = PG.connect(dbname: 'bookmark_manager')
+    end
+
+    result = connection.exec("INSERT INTO comments (bookmark_id, text) VALUES('#{params[:bookmark_id]}', '#{params[:text]}') RETURNING id, text")
     Comment.new(result.first['id'], result.first['text'])
   end
 end
