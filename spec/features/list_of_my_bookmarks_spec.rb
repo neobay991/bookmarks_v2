@@ -4,7 +4,7 @@ require './bookmark_app.rb'
 # So that I can easily find a website I have bookmarked
 # I would like to be able to see a list of my Bookmark
 
-feature 'Bookmark' do
+feature 'List of bookamrks' do
   scenario 'a user can view a list of  Bookmark' do
     # Add the test data
     Bookmark.create(url: 'http://3makersacademy.com', title: '3makersacademy')

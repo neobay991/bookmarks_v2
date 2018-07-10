@@ -15,6 +15,7 @@ feature 'Deleting a bookmark' do
     fill_in('title', with: "Bookmark 2")
     click_button('Add bookmark')
     click_button('Delete', match: :first)
+    visit('/bookmarks')
 
     expect(current_path).to eq '/bookmarks'
     expect(page).not_to have_content 'Bookmark 1'

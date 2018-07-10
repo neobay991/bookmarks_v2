@@ -59,6 +59,9 @@ the 'child' model, Comment, belongs to a single Bookmark.
   ONE       ––≡≡   MANY
  Bookmark   ––≡≡  Comments
 
+ ONE       ––≡≡   MANY
+USER      ––≡≡  Messages
+
  The only way to store this in a table relationship is to add an extra column to the 'child' model.
 
 For instance, in the table below, the first two comments refer to a Bookmark with an ID of 1. The last comment refers to a Bookmark with an ID of 2:

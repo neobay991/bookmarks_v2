@@ -87,6 +87,18 @@ class Bookmark
     result.map { |comment| Comment.new(comment['id'], comment['text']) }
   end
 
+  def tags
+    if ENV['ENVIRONMENT'] == 'test'
+      connection = PG.connect(dbname: 'bookmark_manager_test2')
+    else
+      connection = PG.connect(dbname: 'bookmark_manager')
+    end
+
+    # TODO , get explanation about this query
+    result = connection.exec("SELECT tags.id, content FROM bookmark_tags INNER JOIN tags ON tags.id = bookmark_tags.tag_id WHERE bookmark_tags.bookmark_id = #{@id}")
+    result.map { |tag| Tag.new(tag['id'], tag['content']) }
+  end
+
   def ==(other)
     @id == other.id
   end

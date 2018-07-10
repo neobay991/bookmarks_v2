@@ -1,12 +1,20 @@
 require 'sinatra/base'
 require './lib/bookmark'
 require './lib/comment'
+require './lib/tag'
+require './lib/bookmark_tag'
 require 'uri' # this module is required for flash[:notice]
 require 'sinatra/flash' # this module is required for flash[:notice]
 
 class BookmarkWeb < Sinatra::Base
 
+  # this enables html forms to use DELETE and PATCH methods
+  set :method_override, true
+
+  # this line is required for flash[:notice]
   enable :sessions
+
+  # this line is required for flash[:notice]
   register Sinatra::Flash
 
   get '/' do
@@ -24,7 +32,8 @@ class BookmarkWeb < Sinatra::Base
 
   post '/bookmarks' do
     flash[:notice] = "You must submit a valid URL" unless Bookmark.create(url: params['url'], title: params['title'])
-    p "Form data submitted to the /Bookmark route!"
+
+    p "Form data submitted to the /bookmarks route!"
 
     redirect '/bookmarks'
   end
@@ -59,15 +68,29 @@ class BookmarkWeb < Sinatra::Base
   end
 
   post '/bookmarks/:id/comments/confirm' do
-    p params
-
     Comment.create(bookmark_id: params['id'], text: params['text'])
 
+    p params
     p "Form data submitted to the /comments route!"
 
     redirect '/bookmarks'
   end
 
+  get '/bookmarks/:id/tags/new' do
+    p params
+    @bookmark = Bookmark.find(params['id'])
+    erb :"tags/new"
+  end
+
+  post '/bookmarks/:id/tags' do
+    tag = Tag.create(tag_content: params['tag_content'])
+    BookmarkTag.create(bookmark_id: params['id'], tag_id: tag.id)
+
+    p params
+    p "Form data submitted to the /tags route!"
+
+    redirect('/bookmarks')
+  end
 
   run! if app_file == $0
 end
